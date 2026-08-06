@@ -50,6 +50,12 @@ GET http://10.17.104.247/audit/diagram-viewer/api.php?action=diagram&id=6138
 
 ## Progress & Iterasi (logbook)
 
+### 2026-08-07 — Fase A & B SELESAI ✅
+- **Fase A**: 6.151/6.151 markdown (28,5 MB, 0 gagal, 100% punya connectors) → `output/markdown/`
+- **Fase B**: 6.151/6.151 SVG (78,7 MB, 100% valid closed tag) → `output/svg/`
+- Total ~40 menit utk 2×6.151 API calls (sleep 0.15s/diagram)
+- Korpus siap utk RAG (MD) + arsip visual (SVG)
+
 ### 2026-08-07 — Collector EA → charts.db SELESAI ✅
 - `collection-engine/collect_ea_ugm.py` → 5 tabel di charts.db:
   - `r9_ea_packages` 7.100 | `r9_ea_elements` 132.183 | `r9_ea_connectors` 94.375 | `r9_ea_diagrams` 6.151 | `r9_ea_diagram_objects` 149.954
