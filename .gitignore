@@ -1,0 +1,3 @@
+output/markdown/*.md
+output/svg/*.svg
+__pycache__/
