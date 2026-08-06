@@ -43,10 +43,30 @@ GET http://10.17.104.247/audit/diagram-viewer/api.php?action=diagram&id=6138
 
 | Fase | Isi | Status |
 |---|---|---|
-| **A** | Diagram → Markdown struktural (6.151 diagram: nodes + connectors per diagram) | ⏳ |
-| **B** | Diagram → SVG/Image (render ulang dari objects+connectors; atau image via WebEA) | ⏳ |
-| **D** | Enhance skill `ugm-enterprise-architecture` — dokumentasikan semua jalur + query | ⏳ |
+| **A** | Diagram → Markdown struktural (6.151 diagram: nodes + connectors per diagram) | 🔄 jalan |
+| **B** | Diagram → SVG/Image (render ulang dari objects+connectors; atau image via WebEA) | 🔄 jalan |
+| **D** | Enhance skill `ugm-enterprise-architecture` — dokumentasikan semua jalur + query | ✅ v2.0.0 selesai |
 | **C** | Dashboard EA lengkap (charts.db: proses, aplikasi, elemen per tipe, tren) | ⏳ |
+
+## Progress & Iterasi (logbook)
+
+### 2026-08-07 — Collector EA → charts.db SELESAI ✅
+- `collection-engine/collect_ea_ugm.py` → 5 tabel di charts.db:
+  - `r9_ea_packages` 7.100 | `r9_ea_elements` 132.183 | `r9_ea_connectors` 94.375 | `r9_ea_diagrams` 6.151 | `r9_ea_diagram_objects` 149.954
+- Iterasi (pitfall → fix):
+  1. executemany dict → tuple
+  2. Query multi-line gagal via SSH → single-line
+  3. ConvertTo-Json 132K rows hang (7+ menit) → **batch 25K per Object_ID**
+  4. JSON terpotong di ~6.8MB (batas console SSH) → **tulis file JSON di server → baca via SFTP chunk 1MB**
+  5. `t_diagram` pakai `cx`/`cy` (bukan Width/Height)
+  6. `t_diagramobjects` pakai `RectLeft/Top/Right/Bottom` (bukan `rect`)
+- Cron: `collect-ea-ugm` tiap hari 04:00 (job `9ee05160435f`, script `~/.hermes/scripts/collect_ea_ugm.py`)
+
+### 2026-08-07 — Master plan EA Decision Intelligence
+- `RENCANA-EA-DECISION-INTELLIGENCE.md` — dual-view (Rektorat/BTD), 6 metrik keputusan dari Risk 2.604/KPI 1.643/Regulasi 971/OC_Role 1.850
+
+### 2026-08-07 — Skill v2.0
+- `ugm-enterprise-architecture` → 3 jalur data + API diagram + pitfalls
 
 ## Referensi
 - Skill: `sparx-ea-rag` (pola export → markdown → Qdrant), `ugm-enterprise-architecture`, `ea-qdrant-indexer`
